@@ -1,0 +1,67 @@
+<!-- signup.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Sign Up</title>
+        <link rel="stylesheet" href="login.css"/>
+    </head>
+    <body>
+        <header>
+            <h1><a href="/">📝 NotesApp</a></h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="login.html">Login</a>
+            </nav>
+          </header>
+        <main>
+            <h1>Register Now</h1>
+            <form id="signupForm">
+                <input type="text" id="username" placeholder="Username" required/>
+                <input type="password" id="password" placeholder="Password" required/>
+                <input type="password" id="password2" placeholder="re-type Password" required/>
+                <button type="submit">Sign up</button>
+            </form>
+            <p>Already have an account? <a href="login.html">Login Here</a></p>
+        </main>
+        <footer>
+            <p>&copy; 2025 NotesApp. All rights reserved.</p>
+        </footer>
+
+        <script>
+            document.getElementById("signupForm").addEventListener("submit", async (e)=>{
+                e.preventDefault();
+                const username = document.getElementById("username").value;
+                const password = document.getElementById("password").value;
+                const password2 = document.getElementById("password2").value;
+
+                // const Url = "http://192.168.1.2:3000";
+                const Url = "https://vamshidevnotesapi.onrender.com";
+
+                try{
+                    if(password !== password2){
+                        alert("your password and re-type password are not matching!");
+                    }
+                    const res = await fetch(`${Url}/api/auth/register`, {
+                        method : "POST",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify({username, password}),
+                    });
+
+                    if(res.ok){
+                        alert("User Registered! Please Login");
+                        window.location.href = "login.html";
+                    }else{
+                        const {error} = await res.json();
+                        alert("Error: ", + error);
+                    }
+                } catch (err){
+                    console.error(err);
+                    alert("Failed to sign up");
+                }
+            });
+        </script>
+    </body>
+</html>
