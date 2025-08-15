@@ -1,5 +1,4 @@
 const Url = "https://vamshidevnotesapi.onrender.com";
-// "http://192.168.1.2:3000"
 
 const API_URL = `${Url}/api/notes`;
 
